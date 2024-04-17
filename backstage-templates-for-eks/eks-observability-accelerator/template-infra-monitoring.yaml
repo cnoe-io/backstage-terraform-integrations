@@ -1,0 +1,120 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  description: Creates a Infra Monitoring Setup with Prometheus and Grafana
+  name: eks-observability-oss-infra-mon
+  title: EKS Observability - OSS Infra Monitoring
+spec:
+  output:
+    links:
+      - entityRef: ${{ steps['register'].output.entityRef }}
+        icon: catalog
+        title: Open in catalog
+  owner: guest
+  parameters:
+    - properties:
+        tfVars:
+          properties:
+            aws_region:
+              description: AWS Region
+              type: string
+            eks_cluster_id:
+              default: eks-cluster-with-vpc
+              description: Name of the EKS cluster
+              type: string
+            enable_dashboards:
+              default: true
+              description: Enables or disables curated dashboards. Dashboards are managed by the Grafana Operator
+              type: boolean
+            grafana_api_key:
+              description: API key for authorizing the Grafana provider to make changes to Amazon Managed Grafana
+              type: string
+            managed_grafana_workspace_id:
+              description: Amazon Managed Grafana Workspace ID
+              type: string
+            managed_prometheus_workspace_id:
+              default: ""
+              description: Amazon Managed Service for Prometheus Workspace ID
+              type: string
+          required:
+            - grafana_api_key
+            - aws_region
+            - managed_grafana_workspace_id
+          title: Terraform variables
+          type: object
+      title: Terraform config options
+    - properties:
+        adminRoleName:
+          default: Admin
+          description: Name of the role to give the administrative rights on the EKS cluster.
+          title: Admin Role Name
+          type: string
+        clusterName:
+          description: The cluster to run this workflow in.
+          title: Cluster to run
+          type: string
+          ui:field: KubernetesClusterPicker
+        name:
+          title: name of this entry
+          type: string
+        namespace:
+          default: tf-eks-observability
+          title: namespace within the kubernetes cluster to deploy this
+          type: string
+        repoUrl:
+          title: Repository Location
+          type: string
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com
+      title: Configuration Options
+  steps:
+    - action: github:repo:create
+      id: create-repo
+      input:
+        repoUrl: ${{ parameters.repoUrl }}
+      name: Create Repository
+    - action: fetch:template
+      id: fetch-base
+      input:
+        url: ./templates-infra-monitoring/
+        values:
+          adminRoleName: ${{parameters.adminRoleName}}
+          clusterName: ${{ parameters.clusterName }}
+          name: ${{ parameters.name }}
+          namespace: ${{ parameters.namespace }}
+          tfVars: ${{ parameters.tfVars }}
+      name: Fetch Base
+    - action: github:repo:push
+      id: init-repo
+      input:
+        defaultBranch: main
+        repoUrl: ${{ parameters.repoUrl }}
+      name: Initialize Repository
+    - action: roadiehq:utils:sleep
+      id: wait
+      input:
+        amount: 5
+      name: Waiting for the repo to be ready
+    - action: catalog:register
+      id: register
+      input:
+        catalogInfoPath: /catalog-info.yaml
+        repoContentsUrl: ${{ steps['init-repo'].output.repoContentsUrl }}
+      name: Register
+    - action: cnoe:kubernetes:apply
+      id: apply-cm
+      input:
+        clusterName: ${{ parameters.clusterName }}
+        manifestPath: cm.yaml
+        namespaced: true
+      name: Apply TF variables CM
+    - action: cnoe:kubernetes:apply
+      id: apply-workflow
+      input:
+        clusterName: ${{ parameters.clusterName }}
+        manifestPath: workflow.yaml
+        namespaced: true
+      name: Start TF workflow
+  type: service

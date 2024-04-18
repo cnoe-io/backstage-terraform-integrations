@@ -6,7 +6,5 @@ metadata:
 spec:
   targets:
     - ./data-on-eks/template-data-on-eks.yaml
-    - ./data-on-eks/template-data-on-eks-cleanup.yaml
     - ./data-on-eks/template-jupyterhub-on-eks.yaml
-    - ./data-on-eks/template-jupyterhub-on-eks-cleanup.yaml
     - ./eks-observability-accelerator/template-infra-monitoring.yaml

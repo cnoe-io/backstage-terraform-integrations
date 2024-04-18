@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: backstage-templates-on-eks
+  description: A public collection of Backstage templates
+spec:
+  targets:
+    - ./data-on-eks/template-data-on-eks.yaml
+    - ./data-on-eks/template-data-on-eks-cleanup.yaml
+    - ./spark/template-job.yaml
+    - ./spark/template-sa.yaml
+    - ./jupyterhub-on-eks/template-jupyterhub-on-eks.yaml
+    - ./jupyterhub-on-eks/template-jupyterhub-on-eks-cleanup.yaml
+    - ./eks-observability-accelerator/template-infra-monitoring.yaml

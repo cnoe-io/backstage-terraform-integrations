@@ -2,6 +2,5 @@ resources:
   - sa-data-on-eks.yaml
   - sa-tf-eks-observability.yaml
   - cluster-workflow-data-on-eks.yaml
-  - cluster-workflow-spark-rbac.yaml
   - cluster-workflow-tf-eks-observability.yaml
   - sa-backstage-scaffolder.yaml

@@ -94,7 +94,7 @@ https://raw.githubusercontent.com/cnoe-io/backstage-terraform-integrations/main/
             - allow: [User, Group]
 ```
 
-7. Finally, run the `idpbuilder` command `idpbuilder create --use-path-routing --package-dir examples/ref-implementation -n` to incrementall build and run the above.
+7. Finally, run the `idpbuilder` command `idpbuilder create --use-path-routing --package-dir examples/ref-implementation -n` to incrementally build and run the terraform backstage integrations.
 
 ## Screenshots
 

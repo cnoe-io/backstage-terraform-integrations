@@ -4,8 +4,8 @@
 
 ```bash
 export IDP_AWS_ACCESS_KEY_ID_BASE64=$(echo -n ${YOUR_AWS_ACCESS_KEY_ID} | base64)
-export IDP_AWS_SECRET_ACCESS_KEY_BASE64=$(echo -n ${YOUR_AWS_SECRET_ACCESS_KEY} | base64
-cat << EOF > ./examples/ref-implementation/argo-workflows/manifests/dev/aws-secrets.yaml
+export IDP_AWS_SECRET_ACCESS_KEY_BASE64=$(echo -n ${YOUR_AWS_SECRET_ACCESS_KEY} | base64)
+cat << EOF > ./aws-secrets.yaml
 ---
 apiVersion: v1
 kind: Secret
@@ -17,7 +17,7 @@ data:
   AWS_ACCESS_KEY_ID: ${IDP_AWS_ACCESS_KEY_ID_BASE64}
   AWS_SECRET_ACCESS_KEY: $IDP_AWS_SECRET_ACCESS_KEY_BASE64
 EOF
-kubectl apply -f ./examples/ref-implementation/argo-workflows/manifests/dev/aws-secrets.yaml
+kubectl apply -f ./aws-secrets.yaml
 ```
 
 2. Next, lets create a GitHub App Integration with `idpbuilder` setup to create GitHUb repos as part of template deployments. First lets create a GitHub Application to build an integration secret. GitHub app is used to enable integration between Backstage and GitHub.
@@ -44,7 +44,7 @@ and <enter> to proceed)
 mkdir -p private
 GITHUB_APP_FILE=$(ls github-app-* | head -n1)
 mv ${GITHUB_APP_FILE} private/github-integration.yaml
-export GITHUB_APP_YAML_INDENTED=$(cat ./private/github-integration.yaml | base64 | sed 's/^/    /')
+export GITHUB_APP_YAML_INDENTED=$(cat ./private/github-integration.yaml | base64 | sed 's/^/    /')g
 
 cat << EOF > ./github-integrations-secret.yaml
 ---

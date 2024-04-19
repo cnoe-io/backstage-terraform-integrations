@@ -1,6 +1,6 @@
 # Backstage Terraform Integrations
 
-1. `idpbuilder` setup is a pre-req to use this repo. Naviate to `idpbuilder` repo and create an AWS Secret for deploying templates on AWS using below commands:
+1. [idpbuilder](https://github.com/cnoe-io/idpbuilder/tree/main/examples/ref-implementation) setup is a pre-requisite to run this terraform backstate integration solution. Naviate to `idpbuilder` repo and create an AWS Secret for deploying templates on AWS environment using below commands:
 
 ```bash
 export IDP_AWS_ACCESS_KEY_ID_BASE64=$(echo -n ${YOUR_AWS_ACCESS_KEY_ID} | base64)

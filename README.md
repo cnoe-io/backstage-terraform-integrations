@@ -1,5 +1,4 @@
-# backstage-terraform-integrations
-
+# Backstage Terraform Integrations
 
 1. `idpbuilder` setup is a pre-req to use this repo. Naviate to `idpbuilder` repo and create an AWS Secret for deploying templates on AWS using below commands:
 

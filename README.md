@@ -102,6 +102,6 @@ https://raw.githubusercontent.com/cnoe-io/backstage-terraform-integrations/main/
 
 ![Backstage Template Screen](./images/backstage-template.png)
 
-### Argo Terraform Templates
+### Argo App for Terraform Cluster Workflow Templates
 
 ![Argo Terraform Templates](./images/argo-terraform-template.png)

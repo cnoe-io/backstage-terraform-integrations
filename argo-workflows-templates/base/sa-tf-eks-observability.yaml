@@ -5,6 +5,14 @@ metadata:
   labels:
     app: tf-eks-observability
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tf-eks-observability
+  namespace: tf-eks-observability
+  labels:
+    app: tf-eks-observability
+---
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:

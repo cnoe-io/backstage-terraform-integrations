@@ -1,10 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: jupyterhub-on-eks-
+  name: jupyterhub-on-eks-${{values.name}}
   namespace: ${{values.namespace}}
   labels:
     backstage-id: eks-cluster-${{values.name}}
+    entity-id: ${{values.name}}
     env: dev
 spec:
   arguments:

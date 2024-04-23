@@ -87,24 +87,7 @@ spec:
           description: Name of the role to give the administrative rights on the EKS cluster.
           default: Admin
           type: string
-        clusterName:
-          title: Cluster to run
-          description: The cluster to run this workflow in. 
-          type: string
-          ui:field: KubernetesClusterPicker
-        repoUrl:
-          title: Repository Location
-          type: string
-          ui:field: RepoUrlPicker
-          ui:options:
-            allowedHosts:
-              - github.com
   steps:
-    - id: create-repo
-      name: Create Repository
-      action: github:repo:create
-      input:
-        repoUrl: ${{ parameters.repoUrl }}
     - id: fetch-base
       name: Fetch Base
       action: fetch:template
@@ -116,37 +99,31 @@ spec:
           tfVars: ${{ parameters.tfVars }}
           adminRoleName: ${{parameters.adminRoleName}}
           clusterName: ${{ parameters.clusterName }}
-    - id: init-repo
-      name: Initialize Repository
-      action: github:repo:push
+    - id: publish
+      name: Publishing to a gitea git repository
+      action: publish:gitea
       input:
-        repoUrl: ${{ parameters.repoUrl }}
+        description: Example Data on EKS demo
+        # Hard coded value for this demo purposes only.
+        repoUrl: cnoe.localtest.me:8443/gitea?repo=${{parameters.name}}
         defaultBranch: main
-    - id: wait
-      name: Waiting for the repo to be ready
-      action: "roadiehq:utils:sleep"
+    - id: create-argocd-app
+      name: Create ArgoCD App
+      action: cnoe:create-argocd-app
       input:
-        amount: 5
+        appName: ${{parameters.name}}
+        appNamespace: ${{parameters.namespace}}
+        argoInstance: in-cluster
+        projectName: default
+        # necessary until we generate our own cert
+        repoUrl: http://my-gitea-http.gitea.svc.cluster.local:3000/giteaAdmin/${{parameters.name}}
+        path: "manifests"
     - id: register
       name: Register
       action: catalog:register
       input:
         repoContentsUrl: ${{ steps['init-repo'].output.repoContentsUrl }}
         catalogInfoPath: '/catalog-info.yaml'
-    - id: apply-cm
-      name: Apply TF variables CM
-      action: cnoe:kubernetes:apply
-      input:
-        manifestPath: cm.yaml
-        namespaced: true
-        clusterName: ${{ parameters.clusterName }}
-    - id: apply-workflow
-      name: Start TF workflow
-      action: cnoe:kubernetes:apply
-      input:
-        manifestPath: workflow.yaml
-        namespaced: true
-        clusterName: ${{ parameters.clusterName }}
   output:
     links:
       - title: Open in catalog

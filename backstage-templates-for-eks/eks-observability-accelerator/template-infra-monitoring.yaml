@@ -5,11 +5,6 @@ metadata:
   name: eks-observability-oss-infra-mon
   title: EKS Observability - OSS Infra Monitoring
 spec:
-  output:
-    links:
-      - entityRef: ${{ steps['register'].output.entityRef }}
-        icon: catalog
-        title: Open in catalog
   owner: guest
   parameters:
     - properties:
@@ -49,11 +44,6 @@ spec:
           description: Name of the role to give the administrative rights on the EKS cluster.
           title: Admin Role Name
           type: string
-        clusterName:
-          description: The cluster to run this workflow in.
-          title: Cluster to run
-          type: string
-          ui:field: KubernetesClusterPicker
         name:
           title: name of this entry
           type: string
@@ -61,20 +51,8 @@ spec:
           default: tf-eks-observability
           title: namespace within the kubernetes cluster to deploy this
           type: string
-        repoUrl:
-          title: Repository Location
-          type: string
-          ui:field: RepoUrlPicker
-          ui:options:
-            allowedHosts:
-              - github.com
       title: Configuration Options
   steps:
-    - action: github:repo:create
-      id: create-repo
-      input:
-        repoUrl: ${{ parameters.repoUrl }}
-      name: Create Repository
     - action: fetch:template
       id: fetch-base
       input:
@@ -86,35 +64,33 @@ spec:
           namespace: ${{ parameters.namespace }}
           tfVars: ${{ parameters.tfVars }}
       name: Fetch Base
-    - action: github:repo:push
-      id: init-repo
+    - id: publish
+      name: Publishing to a gitea git repository
+      action: publish:gitea
       input:
+        description: Example EKS Observability Accelerator demo
+        # Hard coded value for this demo purposes only.
+        repoUrl: cnoe.localtest.me:8443/gitea?repo=${{parameters.name}}
         defaultBranch: main
-        repoUrl: ${{ parameters.repoUrl }}
-      name: Initialize Repository
-    - action: roadiehq:utils:sleep
-      id: wait
+    - id: create-argocd-app
+      name: Create ArgoCD App
+      action: cnoe:create-argocd-app
       input:
-        amount: 5
-      name: Waiting for the repo to be ready
-    - action: catalog:register
-      id: register
-      input:
-        catalogInfoPath: /catalog-info.yaml
-        repoContentsUrl: ${{ steps['init-repo'].output.repoContentsUrl }}
+        appName: ${{parameters.name}}
+        appNamespace: ${{parameters.namespace}}
+        argoInstance: in-cluster
+        projectName: default
+        # necessary until we generate our own cert
+        repoUrl: http://my-gitea-http.gitea.svc.cluster.local:3000/giteaAdmin/${{parameters.name}}
+        path: "manifests"
+    - id: register
       name: Register
-    - action: cnoe:kubernetes:apply
-      id: apply-cm
+      action: catalog:register
       input:
-        clusterName: ${{ parameters.clusterName }}
-        manifestPath: cm.yaml
-        namespaced: true
-      name: Apply TF variables CM
-    - action: cnoe:kubernetes:apply
-      id: apply-workflow
-      input:
-        clusterName: ${{ parameters.clusterName }}
-        manifestPath: workflow.yaml
-        namespaced: true
-      name: Start TF workflow
-  type: service
+        repoContentsUrl: ${{ steps['init-repo'].output.repoContentsUrl }}
+        catalogInfoPath: '/catalog-info.yaml'
+  output:
+    links:
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps['register'].output.entityRef }}

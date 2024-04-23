@@ -1,6 +1,12 @@
 # Backstage Terraform Integrations
 
-1. [idpbuilder](https://github.com/cnoe-io/idpbuilder/tree/main/examples/ref-implementation) setup is a pre-requisite to run this terraform backstate integration solution. Naviate to `idpbuilder` repo and create an AWS Secret on required namespaces for deploying templates on AWS environment using below commands:
+1. [idpbuilder](https://github.com/cnoe-io/idpbuilder/tree/main/examples/ref-implementation) setup is a pre-requisite to run this terraform backstate integration solution. Please use the below command to deploy `idpbuilder` to make sure backstage terraform integration Argo application is deployed as part of your setup.
+
+```bash
+idpbuilder create --use-path-routing --package-dir examples/ref-implementation --package-dir examples/terraform-integrations
+```
+
+2. Naviate to `idpbuilder` repo and create an AWS Secret on required namespaces for deploying templates on AWS environment using below commands:
 
 ```bash
 export IDP_AWS_ACCESS_KEY_ID_BASE64=$(echo -n ${YOUR_AWS_ACCESS_KEY_ID} | base64)

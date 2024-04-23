@@ -5,6 +5,7 @@
 ```bash
 export IDP_AWS_ACCESS_KEY_ID_BASE64=$(echo -n ${YOUR_AWS_ACCESS_KEY_ID} | base64)
 export IDP_AWS_SECRET_ACCESS_KEY_BASE64=$(echo -n ${YOUR_AWS_SECRET_ACCESS_KEY} | base64)
+# AWS Credentials for argo Namespace
 cat << EOF > ./aws-secrets.yaml
 ---
 apiVersion: v1
@@ -18,6 +19,8 @@ data:
   AWS_SECRET_ACCESS_KEY: $IDP_AWS_SECRET_ACCESS_KEY_BASE64
 EOF
 kubectl apply -f ./aws-secrets.yaml
+
+# AWS Credentials for data-on-eks Namespace
 cat << EOF > ./aws-secrets-doeks.yaml
 ---
 apiVersion: v1
@@ -31,6 +34,8 @@ data:
   AWS_SECRET_ACCESS_KEY: $IDP_AWS_SECRET_ACCESS_KEY_BASE64
 EOF
 kubectl apply -f ./aws-secrets-doeks.yaml
+
+# AWS Credentials for tf-eks-observability Namespace
 cat << EOF > ./aws-secrets-eobs.yaml
 ---
 apiVersion: v1

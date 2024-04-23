@@ -116,7 +116,7 @@ kubectl apply -f ./github-integrations-secret.yaml
                       path: github-integration.yaml
 ```
 
-5. Next, run the below kubectl command to create an Argo application for create backstage `ClusterWorkFlow` Templates:
+6. Next, run the below kubectl command to create an Argo application for create backstage `ClusterWorkFlow` Templates:
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/cnoe-io/backstage-terraform-integrations/main/argo-application/terraform-workflows-templates.yaml

@@ -57,7 +57,7 @@ EOF
 kubectl apply -f ./aws-secrets-eobs.yaml
 ```
 
-2. Next, lets create a GitHub App Integration with `idpbuilder` setup to create GitHUb repos as part of template deployments. First lets create a GitHub Application to build an integration secret. GitHub app is used to enable integration between Backstage and GitHub.
+3. Next, lets create a GitHub App Integration with `idpbuilder` setup to create GitHUb repos as part of template deployments. First lets create a GitHub Application to build an integration secret. GitHub app is used to enable integration between Backstage and GitHub.
 This allows you for integration actions such as automatically importing Backstage configuration such as Organization information and templates.
 
 We strongly encourage you to create a **dedicated GitHub organization**. If you don't have an organization for this purpose, please follow [this link](https://docs.github.com/en/organizations/collaborating-with-groups-in-organizations/creating-a-new-organization-from-scratch) to create one.
@@ -97,7 +97,7 @@ EOF
 kubectl apply -f ./github-integrations-secret.yaml
 ```
 
-3. Next, In the `idpbuilder` folder, navigate to `./examples/ref-implementation/backstage/manifests/install.yaml` and uncomment the following lines to enable the created GitHub Integration in previous step in backstage config.
+4. Next, In the `idpbuilder` folder, navigate to `./examples/ref-implementation/backstage/manifests/install.yaml` and uncomment the following lines to enable the created GitHub Integration in previous step in backstage config.
 
 ```yaml
       github:

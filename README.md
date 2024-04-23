@@ -106,7 +106,7 @@ kubectl apply -f ./github-integrations-secret.yaml
             - $include: github-integration.yaml
 ```
 
-4. Next, In the same file, add the following lines after line 280 for GitHub Integration Secret:
+5. Next, In the same file, add the following lines after line 280 for GitHub Integration Secret:
 
 ```yaml
               - secret:

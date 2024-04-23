@@ -122,7 +122,7 @@ kubectl apply -f ./github-integrations-secret.yaml
 kubectl apply -f https://raw.githubusercontent.com/cnoe-io/backstage-terraform-integrations/main/argo-application/terraform-workflows-templates.yaml
 ```
 
-6. Next, In the `idpbuilder` folder, navigate to `./examples/ref-implementation/backstage/manifests/install.yaml` and add the following lines for catalog location at line 171 in backstage config to deploy terraform backstage templates to backstage:
+7. Next, In the `idpbuilder` folder, navigate to `./examples/ref-implementation/backstage/manifests/install.yaml` and add the following lines for catalog location at line 171 in backstage config to deploy terraform backstage templates to backstage:
 
 ```yaml
         - type: url

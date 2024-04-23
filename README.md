@@ -1,6 +1,6 @@
 # Backstage Terraform Integrations
 
-1. [idpbuilder](https://github.com/cnoe-io/idpbuilder/tree/main/examples/ref-implementation) setup is a pre-requisite to run this terraform backstate integration solution. Naviate to `idpbuilder` repo and create an AWS Secret for deploying templates on AWS environment using below commands:
+1. [idpbuilder](https://github.com/cnoe-io/idpbuilder/tree/main/examples/ref-implementation) setup is a pre-requisite to run this terraform backstate integration solution. Naviate to `idpbuilder` repo and create an AWS Secret on required namespaces for deploying templates on AWS environment using below commands:
 
 ```bash
 export IDP_AWS_ACCESS_KEY_ID_BASE64=$(echo -n ${YOUR_AWS_ACCESS_KEY_ID} | base64)
@@ -18,6 +18,32 @@ data:
   AWS_SECRET_ACCESS_KEY: $IDP_AWS_SECRET_ACCESS_KEY_BASE64
 EOF
 kubectl apply -f ./aws-secrets.yaml
+cat << EOF > ./aws-secrets-doeks.yaml
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: aws-credentials
+  namespace: data-on-eks
+type: Opaque
+data:
+  AWS_ACCESS_KEY_ID: ${IDP_AWS_ACCESS_KEY_ID_BASE64}
+  AWS_SECRET_ACCESS_KEY: $IDP_AWS_SECRET_ACCESS_KEY_BASE64
+EOF
+kubectl apply -f ./aws-secrets-doeks.yaml
+cat << EOF > ./aws-secrets-eobs.yaml
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: aws-credentials
+  namespace: tf-eks-observability
+type: Opaque
+data:
+  AWS_ACCESS_KEY_ID: ${IDP_AWS_ACCESS_KEY_ID_BASE64}
+  AWS_SECRET_ACCESS_KEY: $IDP_AWS_SECRET_ACCESS_KEY_BASE64
+EOF
+kubectl apply -f ./aws-secrets-eobs.yaml
 ```
 
 2. Next, lets create a GitHub App Integration with `idpbuilder` setup to create GitHUb repos as part of template deployments. First lets create a GitHub Application to build an integration secret. GitHub app is used to enable integration between Backstage and GitHub.

@@ -6,6 +6,7 @@ metadata:
   title: EKS Observability - OSS Infra Monitoring
 spec:
   owner: guest
+  type: service
   parameters:
     - properties:
         tfVars:

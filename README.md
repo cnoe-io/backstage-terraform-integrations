@@ -128,7 +128,7 @@ kubectl apply -f ./github-integrations-secret.yaml
             - allow: [User, Group]
 ```
 
-7. Finally, run the `idpbuilder` command `idpbuilder create --use-path-routing --package-dir examples/ref-implementation --package-dir examples/terraform-integrations -n` to incrementally build and run the terraform backstage integrations.
+7. Finally, run the `idpbuilder` command `idpbuilder create --use-path-routing --package-dir examples/ref-implementation --package-dir examples/terraform-integrations` to build and run the terraform backstage integrations.
 
 ## Screenshots
 

@@ -119,13 +119,7 @@ kubectl apply -f ./github-integrations-secret.yaml
                       path: github-integration.yaml
 ```
 
-6. Next, run the below kubectl command to create an Argo application for create backstage `ClusterWorkFlow` Templates:
-
-```bash
-kubectl apply -f https://raw.githubusercontent.com/cnoe-io/backstage-terraform-integrations/main/argo-application/terraform-workflows-templates.yaml
-```
-
-7. Next, In the `idpbuilder` folder, navigate to `./examples/ref-implementation/backstage/manifests/install.yaml` and add the following lines for catalog location at line 171 in backstage config to deploy terraform backstage templates to backstage:
+6. Next, In the `idpbuilder` folder, navigate to `./examples/ref-implementation/backstage/manifests/install.yaml` and add the following lines for catalog location at line 171 in backstage config to deploy terraform backstage templates to backstage:
 
 ```yaml
         - type: url
@@ -134,7 +128,7 @@ kubectl apply -f https://raw.githubusercontent.com/cnoe-io/backstage-terraform-i
             - allow: [User, Group]
 ```
 
-8. Finally, run the `idpbuilder` command `idpbuilder create --use-path-routing --package-dir examples/ref-implementation -n` to incrementally build and run the terraform backstage integrations.
+7. Finally, run the `idpbuilder` command `idpbuilder create --use-path-routing --package-dir examples/ref-implementation --package-dir examples/terraform-integrations` to build and run the terraform backstage integrations.
 
 ## Screenshots
 

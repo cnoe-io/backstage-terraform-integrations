@@ -84,7 +84,7 @@ and <enter> to proceed)
 mkdir -p private
 GITHUB_APP_FILE=$(ls github-app-* | head -n1)
 mv ${GITHUB_APP_FILE} private/github-integration.yaml
-export GITHUB_APP_YAML_INDENTED=$(cat ./private/github-integration.yaml | base64 | sed 's/^/    /')g
+export GITHUB_APP_YAML_INDENTED=$(cat ./private/github-integration.yaml | base64 | sed 's/^/    /')
 
 cat << EOF > ./github-integrations-secret.yaml
 ---

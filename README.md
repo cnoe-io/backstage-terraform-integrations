@@ -4,7 +4,7 @@
 
 Prepare to embark on a transformative journey where innovation meets efficiency, and the boundaries of platform engineering are pushed to new heights. Welcome to the world of Backstage Terraform Integrations, where cnoe-io's reference implementations, such as idpbuilder and reference-implementations-aws, converge with the cutting-edge AWS-maintained, Terraform-based open-source solutions like data-on-eks and aws-observability-accelerator.
 
-> **WORK IN PROGRESS**: Current the repository is in POC stage and we only support creation of components from platform templates. We will continuously evolve this to add more more features such as supporting full lifecycle of components such as delete, update etc., and integrate newer AWS maintained terraform based open source solutions in future.
+> **WORK IN PROGRESS**: *Current the repository is in POC stage and we only support creation of components from platform templates. We will continuously evolve this to add more more features such as supporting full lifecycle of components such as delete, update etc., and integrate newer AWS maintained terraform based open source solutions in future.*
 
 ## 🎯 About
 
@@ -178,7 +178,7 @@ idpbuilder create \
 
 If you'd like to contribute to the project or know the architecture and internals of this project, check out the [contribution doc](./CONTRIBUTING.md).
 
-## 🏆 Extending the backstage terraform integrations
+## 🔥 Extending the backstage terraform integrations
 
 We will actively working to evolve this to add more more features such as supporting full lifecycle of components such as delete, update etc., and integrate newer AWS maintained terraform based open source solutions in future.
 
@@ -192,5 +192,5 @@ If you have any questions or need clarifications on topics covered here, please 
 
 Built with ❤️.
 
-## 🤝 Support & Feedback
+## 🏆 Support & Feedback
 Support is provided on a best effort basis. If you have feedback, feature ideas, or wish to report bugs, please use the [Issues](https://github.com/cnoe-io/backstage-terraform-integrations/issuess) section of this GitHub.

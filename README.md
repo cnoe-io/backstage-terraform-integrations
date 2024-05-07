@@ -1,6 +1,6 @@
 # Backstage Terraform Integrations
 
-💥 Unlock the Power of Seamless Integration: Backstage Terraform Unleashed!
+💥 Unlock the Power of Seamless Integration: Backstage Terraform Integrations Unleashed !
 
 Prepare to embark on a transformative journey where innovation meets efficiency, and the boundaries of platform engineering are pushed to new heights. Welcome to the world of Backstage Terraform Integrations, where cnoe-io's reference implementations, such as idpbuilder and reference-implementations-aws, converge with the cutting-edge AWS-maintained, Terraform-based open-source solutions like data-on-eks and aws-observability-accelerator.
 
@@ -20,13 +20,13 @@ The seamless integration of Terraform and AWS-maintained open-source solutions w
 
 With Backstage Terraform integrations, organizations can confidently embrace the latest AWS technologies, accelerate time-to-market, and deliver robust, secure, and highly observable platform templates that drive business value and competitive advantage.
 
-## 🏃‍♀️Prerequisites
+## 🏃‍♀️ Prerequisites
 
 1. We might need a container engines such as `Docker Desktop`, `Podman` to run backstage terraform integrations locally. Please check [this](https://github.com/cnoe-io/idpbuilder?tab=readme-ov-file#prerequisites) documentation to setup your container engine.
 
 2. Download and install [idpbuilder](https://github.com/cnoe-io/idpbuilder?tab=readme-ov-file#download-and-install-the-idpbuilder) for running backstage terraform integrations.
 
-## 🚀 Implementation walkthrough
+## 🌟 Implementation walkthrough
 
 1. Use the below command to deploy `idpbuilder` to make sure backstage terraform integration Argo application is deployed as part of your setup.
 
@@ -178,7 +178,7 @@ idpbuilder create \
 
 If you'd like to contribute to the project or know the architecture and internals of this project, check out the [contribution doc](./CONTRIBUTING.md).
 
-## 🚀 Extending the backstage terraform integrations
+## 🏆 Extending the backstage terraform integrations
 
 We will actively working to evolve this to add more more features such as supporting full lifecycle of components such as delete, update etc., and integrate newer AWS maintained terraform based open source solutions in future.
 

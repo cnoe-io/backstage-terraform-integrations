@@ -1,6 +1,32 @@
 # Backstage Terraform Integrations
 
-1. [idpbuilder](https://github.com/cnoe-io/idpbuilder/tree/main/examples/ref-implementation) setup is a pre-requisite to run this terraform backstate integration solution. Please use the below command to deploy `idpbuilder` to make sure backstage terraform integration Argo application is deployed as part of your setup.
+Backstage terraform integrations helps extends cnoe-io reference implementations to support newer platform templates on backstage.extends cnoe-io reference implementations such as [idpbuilder](https://github.com/cnoe-io/idpbuilder), [reference-implementations-aws](https://github.com/cnoe-io/reference-implementation-aws) to integrate with AWS maintained terraform based open source solutions such as [data-on-eks](https://github.com/awslabs/data-on-eks), [aws-observability-accelerator](https://github.com/aws-observability/aws-observability-accelerator) to support newer platform templates on backstage.
+
+> **WORK IN PROGRESS**: Current the repository is in POC stage and we only support creation of components from platform templates. We will continuously evolve this to add more more features such as supporting full lifecycle of components such as delete, update etc., and integrate newer AWS maintained terraform based open source solutions in future.
+
+## About
+
+Backstage Terraform integrations serve as a powerful bridge, seamlessly extending the capabilities of cnoe-io's reference implementations, such as [idpbuilder](https://github.com/cnoe-io/idpbuilder) and [reference-implementations-aws](https://github.com/cnoe-io/reference-implementation-aws). This integration enables these reference implementations to harness the full potential of AWS-maintained, Terraform-based open-source solutions, including [data-on-eks](https://github.com/awslabs/data-on-eks) and [aws-observability-accelerator](https://github.com/aws-observability/aws-observability-accelerator).
+
+By leveraging these Terraform integrations, Backstage becomes a versatile platform that can effortlessly incorporate cutting-edge AWS technologies and services. This synergy empowers developers and architects to construct robust, scalable, and highly observable platform templates tailored to their specific needs.
+
+The integration process is a symphony of automation and efficiency. Terraform, with its declarative approach to infrastructure as code, orchestrates the provisioning and configuration of the desired AWS resources. This streamlined process ensures consistency, reproducibility, and adherence to best practices across multiple environments, from development to production.
+
+Moreover, the integration with AWS-maintained open-source solutions brings a wealth of expertise and community-driven innovation to the table. Solutions like data-on-eks and aws-observability-accelerator are meticulously crafted by AWS experts, incorporating industry-leading practices and architectural patterns. By harnessing these solutions, developers can benefit from battle-tested architectures, enhanced security, and optimized performance, all while reducing the time and effort required for implementation.
+
+The seamless integration of Terraform and AWS-maintained open-source solutions within Backstage empowers organizations to unlock new realms of possibilities. Whether it's deploying highly available and scalable data platforms on Amazon Elastic Kubernetes Service (EKS) or implementing comprehensive observability solutions for monitoring, logging, and tracing, Backstage becomes a powerful catalyst for innovation and digital transformation.
+
+With Backstage Terraform integrations, organizations can confidently embrace the latest AWS technologies, accelerate time-to-market, and deliver robust, secure, and highly observable platform templates that drive business value and competitive advantage.
+
+## Prerequisites
+
+1. We might need a container engines such as `Docker Desktop`, `Podman` to run backstage terraform integrations locally. Please check [this](https://github.com/cnoe-io/idpbuilder?tab=readme-ov-file#prerequisites) documentation to setup your container engine.
+
+2. Download and install [idpbuilder](https://github.com/cnoe-io/idpbuilder?tab=readme-ov-file#download-and-install-the-idpbuilder) for running backstage terraform integrations.
+
+## Implementation walkthrough
+
+1. Use the below command to deploy `idpbuilder` to make sure backstage terraform integration Argo application is deployed as part of your setup.
 
 ```bash
 idpbuilder create \
@@ -60,8 +86,7 @@ EOF
 kubectl apply -f ./aws-secrets-eobs.yaml
 ```
 
-3. Next, lets create a GitHub App Integration with `idpbuilder` setup to create GitHUb repos as part of template deployments. First lets create a GitHub Application to build an integration secret. GitHub app is used to enable integration between Backstage and GitHub.
-This allows you for integration actions such as automatically importing Backstage configuration such as Organization information and templates.
+3. Next, lets create a GitHub App Integration with `idpbuilder` setup to create GitHUb repos as part of template deployments. First lets create a GitHub Application to build an integration secret. GitHub app is used to enable integration between Backstage and GitHub. This allows you for integration actions such as automatically importing Backstage configuration such as Organization information and templates.
 
 We strongly encourage you to create a **dedicated GitHub organization**. If you don't have an organization for this purpose, please follow [this link](https://docs.github.com/en/organizations/collaborating-with-groups-in-organizations/creating-a-new-organization-from-scratch) to create one.
 
@@ -100,7 +125,7 @@ EOF
 kubectl apply -f ./github-integrations-secret.yaml
 ```
 
-4. Next, In the `idpbuilder` folder, navigate to `./examples/ref-implementation/backstage/manifests/install.yaml` and uncomment the following lines to enable the created GitHub Integration in previous step in backstage config.
+4. Next, in the `idpbuilder` folder, navigate to `./examples/ref-implementation/backstage/manifests/install.yaml` and uncomment the following lines to enable the created GitHub Integration in previous step in backstage config.
 
 ```yaml
       github:
@@ -109,7 +134,7 @@ kubectl apply -f ./github-integrations-secret.yaml
             - $include: github-integration.yaml
 ```
 
-5. Next, In the same file, add the following lines after line 280 for GitHub Integration Secret:
+5. Next, in the same file, add the following lines after line 280 for GitHub Integration Secret:
 
 ```yaml
               - secret:
@@ -119,7 +144,7 @@ kubectl apply -f ./github-integrations-secret.yaml
                       path: github-integration.yaml
 ```
 
-6. Next, In the `idpbuilder` folder, navigate to `./examples/ref-implementation/backstage/manifests/install.yaml` and add the following lines for catalog location at line 171 in backstage config to deploy terraform backstage templates to backstage:
+6. Next, in the `idpbuilder` folder, navigate to `./examples/ref-implementation/backstage/manifests/install.yaml` and add the following lines for catalog location at line 171 in backstage config to deploy terraform backstage templates to backstage:
 
 ```yaml
         - type: url
@@ -128,7 +153,14 @@ kubectl apply -f ./github-integrations-secret.yaml
             - allow: [User, Group]
 ```
 
-7. Finally, run the `idpbuilder` command `idpbuilder create --use-path-routing --package-dir examples/ref-implementation --package-dir examples/terraform-integrations` to build and run the terraform backstage integrations.
+7. Finally, run the following `idpbuilder` command to build and run the terraform backstage integrations:
+
+```bash
+idpbuilder create \
+  --use-path-routing \
+  --package-dir examples/ref-implementation \
+  --package-dir examples/terraform-integrations
+```
 
 ## Screenshots
 

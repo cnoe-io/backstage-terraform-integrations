@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: s3-bucket-${{values.name}}
+  description: S3 Bucket for ${{ values.name }}
+  annotations:
+    backstage.io/kubernetes-namespace: ${{values.namespace}}
+    argo-workflows.cnoe.io/label-selector: env=dev,entity-id=${{values.name}}
+    argo-workflows.cnoe.io/cluster-name: local
+spec:
+  type: s3-bucket
+  lifecycle: experimental
+  owner: guest
+  system: ${{values.name | dump}}

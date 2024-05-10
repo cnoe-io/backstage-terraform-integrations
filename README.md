@@ -44,6 +44,7 @@ idpbuilder create \
 ```bash
 export IDP_AWS_ACCESS_KEY_ID_BASE64=$(echo -n ${YOUR_AWS_ACCESS_KEY_ID} | base64)
 export IDP_AWS_SECRET_ACCESS_KEY_BASE64=$(echo -n ${YOUR_AWS_SECRET_ACCESS_KEY} | base64)
+export IDP_AWS_REGION=YOUR_AWS_REGION
 # AWS Credentials for argo Namespace
 cat << EOF > ./aws-secrets.yaml
 ---
@@ -88,6 +89,22 @@ data:
   AWS_SECRET_ACCESS_KEY: $IDP_AWS_SECRET_ACCESS_KEY_BASE64
 EOF
 kubectl apply -f ./aws-secrets-eobs.yaml
+
+# AWS Credentials for flux-system Namespace for TOFU Controller
+cat << EOF > ./aws-secrets-tofu.yaml
+---
+apiVersion: v1
+kind: Secret
+metadata:
+name: aws-credentials
+namespace: flux-system
+type: Opaque
+stringData:
+AWS_ACCESS_KEY_ID: ${YOUR_AWS_ACCESS_KEY_ID}
+AWS_SECRET_ACCESS_KEY: ${YOUR_AWS_SECRET_ACCESS_KEY}
+AWS_REGION: ${IDP_AWS_REGION}
+EOF
+kubectl apply -f ./aws-secrets-tofu.yaml
 ```
 
 3. Next, in the `idpbuilder` folder, navigate to `./examples/ref-implementation/backstage/manifests/install.yaml` and add the following lines for catalog location at line 171 in backstage config to deploy terraform backstage templates to backstage:

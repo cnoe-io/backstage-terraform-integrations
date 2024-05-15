@@ -48,7 +48,7 @@ spec:
       name: Publishing to a gitea git repository
       action: publish:gitea
       input:
-        description: Example EKS Observability Accelerator demo
+        description: Example S3 Bucket demo
         # Hard coded value for this demo purposes only.
         repoUrl: cnoe.localtest.me:8443/gitea?repo=${{parameters.name}}
         defaultBranch: main

@@ -3,6 +3,8 @@ kind: Terraform
 metadata:
   name: aws-s3-bucket-${{values.name}}
   namespace: flux-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
   labels:
     tf.weave.works/composite: s3-bucket
     backstage-id: s3-bucket-${{values.name}}

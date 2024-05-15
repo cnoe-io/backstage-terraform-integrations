@@ -3,5 +3,7 @@ kind: ConfigMap
 metadata:
   name: "s3-bucket-${{values.name}}-tf-cm"
   namespace: flux-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 data:
     ${{ values.tfVars | dump }}

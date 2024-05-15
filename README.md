@@ -124,6 +124,15 @@ idpbuilder create \
   --package-dir examples/ref-implementation \
   --package-dir examples/terraform-integrations
 ```
+## 🌟 Component delete workflow
+
+Please follow the following steps if you are looking to delete a component created using the backstage terraform integrations :
+
+1. In your [argocd](https://cnoe.localtest.me:8443/argocd) console, naviagate to your application created for your component and delete it manually.
+
+2. In your [gitea](https://cnoe.localtest.me:8443/gitea/) console, the  created repository for your component and delete it manually under settings.
+
+3. Finally in your backstage console, navigate to component and click on `unregister component` to remove the deleted component from backstage.
 
 ## 🚀 Backstage and Argo UI
 

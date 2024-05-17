@@ -96,13 +96,13 @@ cat << EOF > ./aws-secrets-tofu.yaml
 apiVersion: v1
 kind: Secret
 metadata:
-name: aws-credentials
-namespace: flux-system
+  name: aws-credentials
+  namespace: flux-system
 type: Opaque
 stringData:
-AWS_ACCESS_KEY_ID: ${YOUR_AWS_ACCESS_KEY_ID}
-AWS_SECRET_ACCESS_KEY: ${YOUR_AWS_SECRET_ACCESS_KEY}
-AWS_REGION: ${IDP_AWS_REGION}
+  AWS_ACCESS_KEY_ID: ${YOUR_AWS_ACCESS_KEY_ID}
+  AWS_SECRET_ACCESS_KEY: ${YOUR_AWS_SECRET_ACCESS_KEY}
+  AWS_REGION: ${IDP_AWS_REGION}
 EOF
 kubectl apply -f ./aws-secrets-tofu.yaml
 ```

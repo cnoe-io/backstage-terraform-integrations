@@ -1,0 +1,74 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  description: Creates an s3 bucket
+  name: s3-bucket
+  title: Creates an Amazon S3 Bucket
+spec:
+  owner: guest
+  type: service
+  parameters:
+    - properties:
+        tfVars:
+          properties:
+            aws_region:
+              description: AWS Region
+              type: string
+          required:
+            - aws_region
+          title: Terraform variables
+          type: object
+        adminRoleName:
+          default: Admin
+          description: Name of the role to give the administrative rights.
+          title: Admin Role Name
+          type: string
+        name:
+          title: name of this s3 bucket
+          type: string
+        namespace:
+          default: flux-system
+          title: Existing namespace to create this resource
+          type: string
+      title: Configuration options
+  steps:
+    - action: fetch:template
+      id: fetch-base
+      input:
+        url: ./template-s3-bucket/
+        values:
+          adminRoleName: ${{parameters.adminRoleName}}
+          name: ${{ parameters.name }}
+          namespace: ${{ parameters.namespace }}
+          tfVars: ${{ parameters.tfVars }}
+      name: Fetch Base
+    - id: publish
+      name: Publishing to a gitea git repository
+      action: publish:gitea
+      input:
+        description: Example S3 Bucket demo
+        # Hard coded value for this demo purposes only.
+        repoUrl: cnoe.localtest.me:8443/gitea?repo=${{parameters.name}}
+        defaultBranch: main
+    - id: create-argocd-app
+      name: Create ArgoCD App
+      action: cnoe:create-argocd-app
+      input:
+        appName: ${{parameters.name}}
+        appNamespace: ${{parameters.namespace}}
+        argoInstance: in-cluster
+        projectName: default
+        # necessary until we generate our own cert
+        repoUrl: http://my-gitea-http.gitea.svc.cluster.local:3000/giteaAdmin/${{parameters.name}}
+        path: "manifests"
+    - id: register
+      name: Register
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
+        catalogInfoPath: 'catalog-info.yaml'
+  output:
+    links:
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps['register'].output.entityRef }}

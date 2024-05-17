@@ -1,0 +1,40 @@
+apiVersion: infra.contrib.fluxcd.io/v1alpha2
+kind: Terraform
+metadata:
+  name: aws-s3-bucket-${{values.name}}
+  namespace: flux-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  labels:
+    tf.weave.works/composite: s3-bucket
+    backstage-id: s3-bucket-${{values.name}}
+    env: dev
+spec:
+  path: aws_s3_bucket
+  values:
+    bucket: ${{values.name}}
+    tags:
+      Environment: Dev
+      Name: ${{values.name}}
+  sourceRef:
+    kind: OCIRepository
+    name: aws-package
+  varsFrom:
+    - kind: ConfigMap
+      name: "s3-bucket-${{values.name}}-tf-cm"
+      varsKeys:
+        - aws_region
+  approvePlan: auto
+  retryInterval: 10s
+  interval: 2m
+  destroyResourcesOnDeletion: true
+  writeOutputsToSecret:
+    name: s3-bucket-${{values.name}}-outputs
+    outputs:
+      - arn
+      - bucket
+  runnerPodTemplate:
+    spec:
+      envFrom:
+        - secretRef:
+            name: aws-credentials

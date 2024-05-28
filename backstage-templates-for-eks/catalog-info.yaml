@@ -5,7 +5,7 @@ metadata:
   description: A public collection of Backstage templates
 spec:
   targets:
-    - ./data-on-eks/template-data-on-eks.yaml
-    - ./data-on-eks/template-jupyterhub-on-eks.yaml
+    - ./jupyterhub-on-eks/template-jupyterhub-on-eks.yaml
+    - ./spark-on-eks/template-data-on-eks.yaml
     - ./eks-observability-accelerator/template-infra-monitoring.yaml
     - ./s3-bucket/template-s3-bucket.yaml

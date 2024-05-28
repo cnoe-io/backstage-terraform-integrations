@@ -8,8 +8,7 @@ spec:
   owner: guest
   type: service
   parameters:
-    - title: Terraform config options
-      properties:
+    - properties:
         tfVars:
           properties:
             acm_certificate_domain:
@@ -53,8 +52,6 @@ spec:
               type: string
           title: Terraform variables
           type: object
-    - title: Configuration Options
-      properties:
         adminRoleName:
           default: Admin
           description: Name of the role to give the administrative rights on the EKS cluster.
@@ -67,6 +64,7 @@ spec:
           default: data-on-eks
           title: namespace within the kubernetes cluster to deploy this
           type: string
+      title: Configuration Options
   steps:
     - id: fetch-base
       name: Fetch Base

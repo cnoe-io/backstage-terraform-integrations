@@ -1,0 +1,32 @@
+apiVersion: infra.contrib.fluxcd.io/v1alpha2
+kind: Terraform
+metadata:
+  name: "eks-cluster-${{values.name}}-terraform"
+  namespace: flux-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  interval: 1m
+  approvePlan: auto
+  path: ./examples/existing-cluster-with-base-and-infra
+  sourceRef:
+    kind: GitRepository
+    name: "eks-cluster-${{values.name}}-git-repository"
+    namespace: flux-system
+  varsFrom:
+    - kind: ConfigMap
+      name: "eks-cluster-${{values.name}}-tf-cm"
+      varsKeys:
+        - aws_region
+        - eks_cluster_id
+        - enable_dashboards
+        - grafana_api_key
+        - managed_grafana_workspace_id
+        - managed_prometheus_workspace_id
+  retryInterval: 10s
+  destroyResourcesOnDeletion: true
+  runnerPodTemplate:
+    spec:
+      envFrom:
+        - secretRef:
+            name: aws-credentials

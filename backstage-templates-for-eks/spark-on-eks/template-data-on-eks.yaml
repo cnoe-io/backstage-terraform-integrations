@@ -8,8 +8,7 @@ spec:
   owner: guest
   type: service
   parameters:
-    - title: Terraform config options
-      properties:
+    - properties:
         tfVars:
           properties:
             eks_cluster_version:
@@ -73,8 +72,6 @@ spec:
               type: string
           title: Terraform variables
           type: object
-    - title: Configuration Options
-      properties:
         name:
           title: name of this entry
           type: string
@@ -87,6 +84,7 @@ spec:
           description: Name of the role to give the administrative rights on the EKS cluster.
           default: Admin
           type: string
+      title: Configuration Options
   steps:
     - id: fetch-base
       name: Fetch Base

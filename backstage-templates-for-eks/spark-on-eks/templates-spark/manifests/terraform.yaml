@@ -1,0 +1,37 @@
+apiVersion: infra.contrib.fluxcd.io/v1alpha2
+kind: Terraform
+metadata:
+  name: "eks-cluster-${{values.name}}-terraform"
+  namespace: flux-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  interval: 1m
+  approvePlan: auto
+  path: ./analytics/terraform/spark-k8s-operator
+  sourceRef:
+    kind: GitRepository
+    name: "eks-cluster-${{values.name}}-git-repository"
+    namespace: flux-system
+  varsFrom:
+    - kind: ConfigMap
+      name: "eks-cluster-${{values.name}}-tf-cm"
+      varsKeys:
+        - eks_cluster_version
+        - eks_data_plane_subnet_secondary_cidr
+        - enable_amazon_prometheus
+        - enable_vpc_endpoints
+        - enable_yunikorn
+        - name
+        - private_subnets
+        - public_subnets
+        - region
+        - secondary_cidr_blocks
+        - vpc_cidr
+  retryInterval: 10s
+  destroyResourcesOnDeletion: true
+  runnerPodTemplate:
+    spec:
+      envFrom:
+        - secretRef:
+            name: aws-credentials

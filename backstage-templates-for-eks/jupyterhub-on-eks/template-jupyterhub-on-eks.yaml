@@ -61,7 +61,7 @@ spec:
           title: name of this entry
           type: string
         namespace:
-          default: data-on-eks
+          default: flux-system
           title: namespace within the kubernetes cluster to deploy this
           type: string
       title: Configuration Options

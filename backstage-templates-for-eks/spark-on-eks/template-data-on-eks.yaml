@@ -78,7 +78,7 @@ spec:
         namespace:
           title: namespace within the kubernetes cluster to deploy this
           type: string
-          default: data-on-eks
+          default: flux-system
         adminRoleName:
           title: Admin Role Name
           description: Name of the role to give the administrative rights on the EKS cluster.

@@ -40,9 +40,12 @@ spec:
               description: Region
               type: string
             secondary_cidr_blocks:
-              default: 100.64.0.0/16
-              description: Secondary CIDR block to be attached to VPC
-              type: string
+              default:
+                - 100.64.0.0/16
+              description: Secondary CIDR blocks to be attached to VPC
+              items:
+                type: string
+              type: array
             vpc_cidr:
               default: 10.1.0.0/21
               description: VPC CIDR. This should be a valid private (RFC 1918) CIDR range

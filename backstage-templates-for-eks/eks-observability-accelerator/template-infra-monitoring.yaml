@@ -38,8 +38,6 @@ spec:
             - managed_grafana_workspace_id
           title: Terraform variables
           type: object
-      title: Terraform config options
-    - properties:
         adminRoleName:
           default: Admin
           description: Name of the role to give the administrative rights on the EKS cluster.

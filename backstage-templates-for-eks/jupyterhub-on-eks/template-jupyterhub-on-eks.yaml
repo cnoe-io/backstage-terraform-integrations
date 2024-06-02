@@ -8,8 +8,7 @@ spec:
   owner: guest
   type: service
   parameters:
-    - title: Terraform config options
-      properties:
+    - properties:
         tfVars:
           properties:
             acm_certificate_domain:
@@ -21,7 +20,7 @@ spec:
               description: Cognito domain prefix for Hosted UI authentication endpoints
               type: string
             eks_cluster_version:
-              default: "1.27"
+              default: "1.29"
               description: EKS Cluster version
               type: string
             jupyter_hub_auth_mechanism:
@@ -53,8 +52,6 @@ spec:
               type: string
           title: Terraform variables
           type: object
-    - title: Configuration Options
-      properties:
         adminRoleName:
           default: Admin
           description: Name of the role to give the administrative rights on the EKS cluster.
@@ -64,9 +61,10 @@ spec:
           title: name of this entry
           type: string
         namespace:
-          default: data-on-eks
+          default: flux-system
           title: namespace within the kubernetes cluster to deploy this
           type: string
+      title: Configuration Options
   steps:
     - id: fetch-base
       name: Fetch Base

@@ -1,0 +1,35 @@
+apiVersion: infra.contrib.fluxcd.io/v1alpha2
+kind: Terraform
+metadata:
+  name: "eks-cluster-${{values.name}}-terraform"
+  namespace: flux-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  interval: 1m
+  approvePlan: auto
+  path: ./ai-ml/jupyterhub
+  sourceRef:
+    kind: GitRepository
+    name: "eks-cluster-${{values.name}}-git-repository"
+    namespace: flux-system
+  varsFrom:
+    - kind: ConfigMap
+      name: "eks-cluster-${{values.name}}-tf-cm"
+      varsKeys:
+        - acm_certificate_domain
+        - cognito_custom_domain
+        - eks_cluster_version
+        - jupyter_hub_auth_mechanism
+        - jupyterhub_domain
+        - name
+        - region
+        - secondary_cidr_blocks
+        - vpc_cidr
+  retryInterval: 10s
+  destroyResourcesOnDeletion: true
+  runnerPodTemplate:
+    spec:
+      envFrom:
+        - secretRef:
+            name: aws-credentials

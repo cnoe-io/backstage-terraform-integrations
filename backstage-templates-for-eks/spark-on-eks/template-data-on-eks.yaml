@@ -37,13 +37,11 @@ spec:
               description: Name of the VPC and EKS Cluster
               type: string
             private_subnets:
-              default:
-                - '["10.1.1.0/24","10.1.2.0/24"]'
+              default: '["10.1.1.0/24","10.1.2.0/24"]'
               description: Private Subnets CIDRs. 254 IPs per Subnet/AZ for Private NAT + NLB + Airflow + EC2 Jumphost etc.
               type: string
             public_subnets:
-              default:
-                - '["10.1.0.0/26","10.1.0.64/26"]'
+              default: '["10.1.0.0/26","10.1.0.64/26"]'
               description: Public Subnets CIDRs. 62 IPs per Subnet/AZ
               type: string
             region:
@@ -51,8 +49,7 @@ spec:
               description: Region
               type: string
             secondary_cidr_blocks:
-              default:
-                - '["100.64.0.0/16"]'
+              default: '["100.64.0.0/16"]'
               description: Secondary CIDR blocks to be attached to VPC
               type: string
             vpc_cidr:

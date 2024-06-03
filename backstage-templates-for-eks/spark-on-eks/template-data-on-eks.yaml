@@ -17,12 +17,9 @@ spec:
               type: string
             eks_data_plane_subnet_secondary_cidr:
               default:
-                - 100.64.0.0/17
-                - 100.64.128.0/17
+                - '["100.64.0.0/17","100.64.128.0/17"]'
               description: Secondary CIDR blocks. 32766 IPs per Subnet per Subnet/AZ for EKS Node and Pods
-              items:
-                type: string
-              type: array
+              type: string
             enable_amazon_prometheus:
               default: true
               description: Enable AWS Managed Prometheus service
@@ -41,31 +38,23 @@ spec:
               type: string
             private_subnets:
               default:
-                - 10.1.1.0/24
-                - 10.1.2.0/24
+                - '["10.1.1.0/24","10.1.2.0/24"]'
               description: Private Subnets CIDRs. 254 IPs per Subnet/AZ for Private NAT + NLB + Airflow + EC2 Jumphost etc.
-              items:
-                type: string
-              type: array
+              type: string
             public_subnets:
               default:
-                - 10.1.0.0/26
-                - 10.1.0.64/26
+                - '["10.1.0.0/26","10.1.0.64/26"]'
               description: Public Subnets CIDRs. 62 IPs per Subnet/AZ
-              items:
-                type: string
-              type: array
+              type: string
             region:
               default: us-west-2
               description: Region
               type: string
             secondary_cidr_blocks:
               default:
-                - 100.64.0.0/16
+                - '["100.64.0.0/16"]'
               description: Secondary CIDR blocks to be attached to VPC
-              items:
-                type: string
-              type: array
+              type: string
             vpc_cidr:
               default: 10.1.0.0/16
               description: VPC CIDR. This should be a valid private (RFC 1918) CIDR range

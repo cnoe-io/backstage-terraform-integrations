@@ -41,7 +41,7 @@ spec:
               type: string
             secondary_cidr_blocks:
               default:
-              - '"["100.64.0.0/16"]"'
+              - ''["100.64.0.0/16"]''
               description: Secondary CIDR blocks to be attached to VPC
               type: string
             vpc_cidr:

@@ -13,19 +13,25 @@ spec:
     kind: GitRepository
     name: "eks-cluster-${{values.name}}-git-repository"
     namespace: flux-system
-  varsFrom:
-    - kind: ConfigMap
-      name: "eks-cluster-${{values.name}}-tf-cm"
-      varsKeys:
-        - acm_certificate_domain
-        - cognito_custom_domain
-        - eks_cluster_version
-        - jupyter_hub_auth_mechanism
-        - jupyterhub_domain
-        - name
-        - region
-        - secondary_cidr_blocks
-        - vpc_cidr
+  vars:
+    - name: acm_certificate_domain
+      value: ${{ values.tfVars.acm_certificate_domain }}
+    - name: cognito_custom_domain
+      value: ${{ values.tfVars.cognito_custom_domain }}
+    - name: eks_cluster_version
+      value: ${{ values.tfVars.eks_cluster_version }}
+    - name: jupyter_hub_auth_mechanism
+      value: ${{ values.tfVars.jupyter_hub_auth_mechanism }}
+    - name: jupyterhub_domain
+      value: ${{ values.tfVars.jupyterhub_domain }}
+    - name: name
+      value: ${{ values.tfVars.name }}
+    - name: region
+      value: ${{ values.tfVars.region }}
+    - name: secondary_cidr_blocks
+      value: [ ${{ values.tfVars.secondary_cidr_blocks }} ]
+    - name: vpc_cidr
+      value: ${{ values.tfVars.vpc_cidr }}
   retryInterval: 10s
   destroyResourcesOnDeletion: true
   runnerPodTemplate:

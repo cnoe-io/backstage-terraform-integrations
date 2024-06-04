@@ -13,16 +13,19 @@ spec:
     kind: GitRepository
     name: "eks-cluster-${{values.name}}-git-repository"
     namespace: flux-system
-  varsFrom:
-    - kind: ConfigMap
-      name: "eks-cluster-${{values.name}}-tf-cm"
-      varsKeys:
-        - aws_region
-        - eks_cluster_id
-        - enable_dashboards
-        - grafana_api_key
-        - managed_grafana_workspace_id
-        - managed_prometheus_workspace_id
+  vars:
+    - name: aws_region
+      value: ${{ values.tfVars.aws_region }}
+    - name: eks_cluster_id
+      value: ${{ values.tfVars.eks_cluster_id }}
+    - name: enable_dashboards
+      value: ${{ values.tfVars.enable_dashboards }}
+    - name: grafana_api_key
+      value: ${{ values.tfVars.grafana_api_key }}
+    - name: managed_grafana_workspace_id
+      value: ${{ values.tfVars.managed_grafana_workspace_id }}
+    - name: managed_prometheus_workspace_id
+      value: ${{ values.tfVars.managed_prometheus_workspace_id }}
   retryInterval: 10s
   destroyResourcesOnDeletion: true
   runnerPodTemplate:

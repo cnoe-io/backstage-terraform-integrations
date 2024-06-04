@@ -19,9 +19,9 @@ spec:
               description: Name of the EKS cluster
               type: string
             enable_dashboards:
-              default: "true"
+              default: true
               description: Enables or disables curated dashboards. Dashboards are managed by the Grafana Operator
-              type: string
+              type: boolean
             grafana_api_key:
               description: API key for authorizing idpthe Grafana provider to make changes to Amazon Managed Grafana
               type: string

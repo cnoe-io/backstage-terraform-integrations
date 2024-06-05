@@ -39,56 +39,12 @@ idpbuilder create \
   --package-dir examples/terraform-integrations
 ```
 
-2. Naviate to `idpbuilder` repo and create an AWS Secret on required namespaces for deploying templates on AWS environment using below commands:
+2. Naviate to `idpbuilder` repo and create an AWS Secret on `flux-system` namespace for deploying templates on AWS environment using below commands:
 
 ```bash
 export IDP_AWS_ACCESS_KEY_ID_BASE64=$(echo -n ${YOUR_AWS_ACCESS_KEY_ID} | base64)
 export IDP_AWS_SECRET_ACCESS_KEY_BASE64=$(echo -n ${YOUR_AWS_SECRET_ACCESS_KEY} | base64)
 export IDP_AWS_REGION=YOUR_AWS_REGION
-# AWS Credentials for argo Namespace
-cat << EOF > ./aws-secrets.yaml
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: aws-credentials
-  namespace: argo
-type: Opaque
-data:
-  AWS_ACCESS_KEY_ID: ${IDP_AWS_ACCESS_KEY_ID_BASE64}
-  AWS_SECRET_ACCESS_KEY: $IDP_AWS_SECRET_ACCESS_KEY_BASE64
-EOF
-kubectl apply -f ./aws-secrets.yaml
-
-# AWS Credentials for data-on-eks Namespace
-cat << EOF > ./aws-secrets-doeks.yaml
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: aws-credentials
-  namespace: data-on-eks
-type: Opaque
-data:
-  AWS_ACCESS_KEY_ID: ${IDP_AWS_ACCESS_KEY_ID_BASE64}
-  AWS_SECRET_ACCESS_KEY: $IDP_AWS_SECRET_ACCESS_KEY_BASE64
-EOF
-kubectl apply -f ./aws-secrets-doeks.yaml
-
-# AWS Credentials for tf-eks-observability Namespace
-cat << EOF > ./aws-secrets-eobs.yaml
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: aws-credentials
-  namespace: tf-eks-observability
-type: Opaque
-data:
-  AWS_ACCESS_KEY_ID: ${IDP_AWS_ACCESS_KEY_ID_BASE64}
-  AWS_SECRET_ACCESS_KEY: $IDP_AWS_SECRET_ACCESS_KEY_BASE64
-EOF
-kubectl apply -f ./aws-secrets-eobs.yaml
 
 # AWS Credentials for flux-system Namespace for TOFU Controller
 cat << EOF > ./aws-secrets-tofu.yaml

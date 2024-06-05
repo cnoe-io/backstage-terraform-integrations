@@ -56,7 +56,7 @@ spec:
           default: Admin
           description: Name of the role to give the administrative rights on the EKS cluster.
           title: Admin Role Name
-          type: string       
+          type: string
         name:
           title: name of this entry
           type: string

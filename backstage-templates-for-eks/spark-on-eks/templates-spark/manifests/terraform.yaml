@@ -17,7 +17,7 @@ spec:
     - name: eks_cluster_version
       value: ${{ values.tfVars. eks_cluster_version }}
     - name: eks_data_plane_subnet_secondary_cidr
-      value: [ ]${{ values.tfVars.eks_data_plane_subnet_secondary_cidr }} ]
+      value: [ ${{ values.tfVars.eks_data_plane_subnet_secondary_cidr }} ]
     - name: enable_amazon_prometheus
       value: ${{ values.tfVars.enable_amazon_prometheus }}
     - name: enable_vpc_endpoints

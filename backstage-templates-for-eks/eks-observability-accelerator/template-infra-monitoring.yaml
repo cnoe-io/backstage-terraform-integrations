@@ -23,7 +23,7 @@ spec:
               description: Enables or disables curated dashboards. Dashboards are managed by the Grafana Operator
               type: boolean
             grafana_api_key:
-              description: API key for authorizing idpthe Grafana provider to make changes to Amazon Managed Grafana
+              description: API key for authorizing the Grafana provider to make changes to Amazon Managed Grafana
               type: string
             managed_grafana_workspace_id:
               description: Amazon Managed Grafana Workspace ID

@@ -42,10 +42,6 @@ idpbuilder create \
 2. Naviate to `idpbuilder` repo and create an AWS Secret on `flux-system` namespace for deploying templates on AWS environment using below commands:
 
 ```bash
-export IDP_AWS_ACCESS_KEY_ID_BASE64=$(echo -n ${YOUR_AWS_ACCESS_KEY_ID} | base64)
-export IDP_AWS_SECRET_ACCESS_KEY_BASE64=$(echo -n ${YOUR_AWS_SECRET_ACCESS_KEY} | base64)
-export IDP_AWS_REGION=YOUR_AWS_REGION
-
 # AWS Credentials for flux-system Namespace for TOFU Controller
 cat << EOF > ./aws-secrets-tofu.yaml
 ---
@@ -58,7 +54,7 @@ type: Opaque
 stringData:
   AWS_ACCESS_KEY_ID: ${YOUR_AWS_ACCESS_KEY_ID}
   AWS_SECRET_ACCESS_KEY: ${YOUR_AWS_SECRET_ACCESS_KEY}
-  AWS_REGION: ${IDP_AWS_REGION}
+  AWS_REGION: ${YOUR_AWS_REGION}
 EOF
 kubectl apply -f ./aws-secrets-tofu.yaml
 ```

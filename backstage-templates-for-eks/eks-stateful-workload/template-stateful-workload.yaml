@@ -3,7 +3,7 @@ kind: Template
 metadata:
   description: Creates an EKS Cluster with Stateful Workload
   name: eks-stateful-workload
-  title: EKS Cluster with Stateful Workload
+  title: EKS Cluster with Stateful Workloads
 spec:
   owner: guest
   type: service

@@ -1,3 +1,5 @@
 .idea
 .settings
 .vscode
+aws-secrets.yaml
+aws-secrets.yml

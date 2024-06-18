@@ -1,10 +1,8 @@
 # Backstage Terraform Integrations
 
-💥 Unlock the Power of Seamless Integration: Backstage Terraform Integrations Unleashed !
+💥 Seamlessly use Backstage Terraform Integrations with the rest of the CNOE stack!
 
-Prepare to embark on a transformative journey where innovation meets efficiency, and the boundaries of platform engineering are pushed to new heights. Welcome to the world of Backstage Terraform Integrations, where cnoe-io's reference implementations, such as idpbuilder and reference-implementations-aws, converge with the cutting-edge AWS-maintained, Terraform-based open-source solutions like data-on-eks and aws-observability-accelerator.
-
-> **WORK IN PROGRESS**: *Current the repository is in POC stage, works only with [idpbuilder](https://github.com/cnoe-io/idpbuilder) and we only support creation of components from platform templates. We will continuously evolve this to add more more features such as supporting full lifecycle of components such as delete, update etc., and integrate newer AWS maintained terraform based open source solutions in future.*
+> **WORK IN PROGRESS**: *Current the repository is in POC stage. The integrations assume you have enabled Terraform integrations either with the [idpbuilder](https://cnoe.io/docs/reference-implementation/integrations/terraform) or that you have deployed [flux controller](https://github.com/cnoe-io/stacks/blob/main/terraform-integrations/fluxcd.yaml) and [tf-controller](https://github.com/cnoe-io/stacks/blob/main/terraform-integrations/tofu-controller.yaml) on the [Amazon EKS](https://cnoe.io/docs/reference-implementation/installations/app-idp) deployment. We will continuously evolve this to add more more features such as supporting full lifecycle of components such as delete, update etc., and integrate newer AWS maintained terraform based open source solutions in future.*
 
 ## 🎯 About
 
@@ -24,18 +22,11 @@ With Backstage Terraform integrations, organizations can confidently embrace the
 
 ## 🏃‍♀️ Prerequisites
 
-1. **Set up a container engine: **
+1. **Set up a container engine:**
 
 We might need a container engines such as `Docker Desktop`, `Podman` to run backstage terraform integrations locally. Please check [this](https://github.com/cnoe-io/idpbuilder?tab=readme-ov-file#prerequisites) documentation to setup your container engine.
 
-2. **Clone the idpbuilder repository:**
-
-```bash
-git clone https://github.com/cnoe-io/idpbuilder.git
-cd idpbuilder
-```
-
-3. **Install idpbuilder locally:**
+2. **Install idpbuilder locally:**
 
 ```bash
 version=$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/cnoe-io/idpbuilder/releases/latest)
@@ -48,14 +39,15 @@ tar xzf idpbuilder.tar.gz
 # example output
 # idpbuilder 0.4.1 go1.21.5 linux/amd64
 ```
-4. **Deploy `idpbuilder` with Terraform integration templates: **
+3. **Deploy `idpbuilder` with Terraform integration templates:**
 
 Use the following command to deploy idpbuilder and ensure that the Backstage Terraform integration Argo application is part of your setup.
 
 ```bash
 idpbuilder create \
   --use-path-routing \
-  --package-dir examples/terraform-integrations
+  -p https://github.com/cnoe-io/stacks//reference-implementation \
+  -p https://github.com/cnoe-io/stacks//terraform-integrations
 ```
 
 5. **Deploy a Data on EKS Terraform stack: **

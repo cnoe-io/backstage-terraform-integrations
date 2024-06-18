@@ -57,7 +57,7 @@ idpbuilder create \
 ```
 
 <details>
-<summary> <b>Optional:</b>: Deploy a Data on EKS Terraform stack</summary>
+<summary> <b>Optional:</b> Deploy a Data on EKS Terraform stack</summary>
 
 In case of deploying AWS resources, you will need access to your AWS account. You can follow the instructions below, to setup your AWS account with CNOE terraform integrations:
 
@@ -92,7 +92,10 @@ kubectl apply -f ./aws-secrets-tofu.yaml
 
 You can optionally install the catalog by adding it to the Backstage config. 
 
-In case of the idpBuilder, clone the [cnoe-io/stacks](https://github.com/cnoe-io/stacks) repository, navigate to `./ref-implementation/backstage/manifests/install.yaml`, and add the following lines for catalog location at line `171` in the Backstage config to deploy Terraform Backstage templates to Backstage:
+In case of the idpBuilder: 
+- clone the [cnoe-io/stacks](https://github.com/cnoe-io/stacks) repository
+- navigate to `./ref-implementation/backstage/manifests/install.yaml`
+- add the following lines for catalog location under `data."app-config.yaml".catalog.locations`
 
 ```yaml
       - type: url
@@ -124,9 +127,9 @@ idpbuilder get secrets
 
 Use the credentials from the above secrets output.
 
-Login to Argo: https://cnoe.localtest.me:8443/argocd
-Login to Backstage: https://cnoe.localtest.me:8443/
-Login to Gitea: https://cnoe.localtest.me:8443/gitea
+- Login to Argo: https://cnoe.localtest.me:8443/argocd
+- Login to Backstage: https://cnoe.localtest.me:8443/
+- Login to Gitea: https://cnoe.localtest.me:8443/gitea
 
 
 ## 🌟 Component delete workflow
@@ -134,10 +137,8 @@ Login to Gitea: https://cnoe.localtest.me:8443/gitea
 Please follow the following steps if you are looking to delete a component created using the backstage terraform integrations. The `Terraform` resources in this repo are configured to clean up the corresponding cloud resources. When the Argo CD application is deleted, the deletion hook for cloud resources kicks in (takes a little bit of time though).
 
 1. In your [argocd](https://cnoe.localtest.me:8443/argocd) console, naviagate to your application created for your component and delete it manually.
-
-2. In your [gitea](https://cnoe.localtest.me:8443/gitea/) console, the created repository for your component and delete it manually under settings.
-
-3. Finally in your backstage console, navigate to component and click on `unregister component` to remove the deleted component from backstage.
+1. In your [gitea](https://cnoe.localtest.me:8443/gitea/) console, the created repository for your component and delete it manually under settings.
+1. Finally in your backstage console, navigate to component and click on `unregister component` to remove the deleted component from backstage.
 
 ## 🚀 Backstage and Argo UI
 

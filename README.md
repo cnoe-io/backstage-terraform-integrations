@@ -104,12 +104,12 @@ In case of the idpBuilder:
           - allow: [User, Group]
 
 ```
-Then run the following idpbuilder command to update the components.
+Then run the following idpbuilder command to update the components with `path-to-stacks-repo` referring to the location where you cloned the [cnoe-io/stacks](https://github.com/cnoe-io/stacks) repository.
 
 ```bash
 idpbuilder create \
   --use-path-routing \
-  -p https://github.com/cnoe-io/stacks//reference-implementation \
+  -p [path-to-stacks-repo]/reference-implementation \
   -p https://github.com/cnoe-io/stacks//terraform-integrations
 ```
 

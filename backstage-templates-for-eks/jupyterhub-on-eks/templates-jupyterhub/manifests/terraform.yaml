@@ -4,7 +4,7 @@ metadata:
   name: "eks-cluster-${{values.name}}-terraform"
   namespace: flux-system
   annotations:
-    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   interval: 1m
   approvePlan: auto

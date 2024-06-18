@@ -24,24 +24,50 @@ With Backstage Terraform integrations, organizations can confidently embrace the
 
 ## 🏃‍♀️ Prerequisites
 
-1. We might need a container engines such as `Docker Desktop`, `Podman` to run backstage terraform integrations locally. Please check [this](https://github.com/cnoe-io/idpbuilder?tab=readme-ov-file#prerequisites) documentation to setup your container engine.
+1. **Set up a container engine: **
 
-2. Download and install [idpbuilder](https://github.com/cnoe-io/idpbuilder?tab=readme-ov-file#download-and-install-the-idpbuilder) for running backstage terraform integrations.
+We might need a container engines such as `Docker Desktop`, `Podman` to run backstage terraform integrations locally. Please check [this](https://github.com/cnoe-io/idpbuilder?tab=readme-ov-file#prerequisites) documentation to setup your container engine.
 
-## 🌟 Implementation walkthrough
+2. **Clone the idpbuilder repository:**
 
-1. Use the below command to deploy `idpbuilder` to make sure backstage terraform integration Argo application is deployed as part of your setup.
+```bash
+git clone https://github.com/cnoe-io/idpbuilder.git
+cd idpbuilder
+```
+
+3. **Install idpbuilder locally:**
+
+```bash
+version=$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/cnoe-io/idpbuilder/releases/latest)
+version=${version##*/}
+curl -L -o ./idpbuilder.tar.gz "https://github.com/cnoe-io/idpbuilder/releases/download/${version}/idpbuilder-$(uname | awk '{print tolower($0)}')-$(uname -m | sed 's/x86_64/amd64/').tar.gz"
+
+tar xzf idpbuilder.tar.gz
+
+./idpbuilder version
+# example output
+# idpbuilder 0.4.1 go1.21.5 linux/amd64
+```
+4. **Deploy `idpbuilder` with Terraform integration templates: **
+
+Use the following command to deploy idpbuilder and ensure that the Backstage Terraform integration Argo application is part of your setup.
 
 ```bash
 idpbuilder create \
   --use-path-routing \
-  --package-dir examples/ref-implementation \
   --package-dir examples/terraform-integrations
 ```
 
-2. Naviate to `idpbuilder` repo and create an AWS Secret on `flux-system` namespace for deploying templates on AWS environment using below commands:
+5. **Deploy a Data on EKS Terraform stack: **
+
+For example, to deploy the `spark-k8s-operator`, you will need access to your AWS account to deploy VPC, EKS, and other Spark resources through these templates. Ensure the following AWS secret is created:
 
 ```bash
+export AWS_ACCESS_KEY_ID=<FILL THIS>
+export AWS_SECRET_ACCESS_KEY=<FILL THIS>
+# Optional for IAM roles
+export AWS_SESSION_TOKEN=<FILL THIS> 
+
 # AWS Credentials for flux-system Namespace for TOFU Controller
 cat << EOF > ./aws-secrets-tofu.yaml
 ---
@@ -52,30 +78,56 @@ metadata:
   namespace: flux-system
 type: Opaque
 stringData:
-  AWS_ACCESS_KEY_ID: ${YOUR_AWS_ACCESS_KEY_ID}
-  AWS_SECRET_ACCESS_KEY: ${YOUR_AWS_SECRET_ACCESS_KEY}
-  AWS_REGION: ${YOUR_AWS_REGION}
+  AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+  AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+  # Add this only if it's required. Optional for IAM roles
+  AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN}
 EOF
+
 kubectl apply -f ./aws-secrets-tofu.yaml
+
 ```
 
-3. Next, in the `idpbuilder` folder, navigate to `./examples/ref-implementation/backstage/manifests/install.yaml` and add the following lines for catalog location at line 171 in backstage config to deploy terraform backstage templates to backstage:
+7. **Update the Backstage configuration: **
+
+In the idpbuilder folder, navigate to `./examples/ref-implementation/backstage/manifests/install.yaml` and add the following lines for catalog location at line `171` in the Backstage config to deploy Terraform Backstage templates to Backstage:
 
 ```yaml
-        - type: url
-          target: https://github.com/cnoe-io/backstage-terraform-integrations/blob/main/backstage-templates-for-eks/catalog-info.yaml
-          rules:
-            - allow: [User, Group]
+      - type: url
+        target: https://github.com/cnoe-io/backstage-terraform-integrations/blob/main/backstage-templates-for-eks/catalog-info.yaml
+        rules:
+          - allow: [User, Group]
+
 ```
 
-4. Finally, run the following `idpbuilder` command to build and run the terraform backstage integrations:
+8. **Build and run the Terraform Backstage integrations: **
+
+Run the following idpbuilder command:
 
 ```bash
 idpbuilder create \
   --use-path-routing \
-  --package-dir examples/ref-implementation \
   --package-dir examples/terraform-integrations
+
 ```
+
+9. **Get secrets: **
+
+Run this command to obtain all the credentials needed to log in to Backstage, Argo, etc.
+
+```bash
+./idpbuilder get secrets
+```
+
+10. **Verify the WebUI components:**
+
+Use the credentials from the above secrets output.
+
+Login to Argo: https://cnoe.localtest.me:8443/argocd
+Login to Backstage: https://cnoe.localtest.me:8443/
+Login to Gitea: https://cnoe.localtest.me:8443/gitea
+
+
 ## 🌟 Component delete workflow
 
 Please follow the following steps if you are looking to delete a component created using the backstage terraform integrations :

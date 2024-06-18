@@ -22,11 +22,11 @@ With Backstage Terraform integrations, organizations can confidently embrace the
 
 ## 🏃‍♀️ Prerequisites
 
-1. **Set up a container engine:**
+### **Set up a container engine:**
 
 We might need a container engines such as `Docker Desktop`, `Podman` to run backstage terraform integrations locally. Please check [this](https://github.com/cnoe-io/idpbuilder?tab=readme-ov-file#prerequisites) documentation to setup your container engine.
 
-2. **Install idpbuilder locally:**
+### **Install idpbuilder locally:**
 
 ```bash
 version=$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/cnoe-io/idpbuilder/releases/latest)
@@ -39,7 +39,13 @@ tar xzf idpbuilder.tar.gz
 # example output
 # idpbuilder 0.4.1 go1.21.5 linux/amd64
 ```
-3. **Deploy `idpbuilder` with Terraform integration templates:**
+or use the following installation script:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/cnoe-io/idpbuilder/main/hack/install.sh | bash
+```
+
+### **Deploy `idpbuilder` with Terraform integration templates:**
 
 Use the following command to deploy idpbuilder and ensure that the Backstage Terraform integration Argo application is part of your setup.
 
@@ -50,9 +56,10 @@ idpbuilder create \
   -p https://github.com/cnoe-io/stacks//terraform-integrations
 ```
 
-5. **Deploy a Data on EKS Terraform stack: **
+<details>
+<summary> <b>Optional:</b>: Deploy a Data on EKS Terraform stack</summary>
 
-For example, to deploy the `spark-k8s-operator`, you will need access to your AWS account to deploy VPC, EKS, and other Spark resources through these templates. Ensure the following AWS secret is created:
+In case of deploying AWS resources, you will need access to your AWS account. You can follow the instructions below, to setup your AWS account with CNOE terraform integrations:
 
 ```bash
 export AWS_ACCESS_KEY_ID=<FILL THIS>
@@ -79,10 +86,13 @@ EOF
 kubectl apply -f ./aws-secrets-tofu.yaml
 
 ```
+</details>
 
-7. **Update the Backstage configuration: **
+### **Update the Backstage catelog:**
 
-In the idpbuilder folder, navigate to `./examples/ref-implementation/backstage/manifests/install.yaml` and add the following lines for catalog location at line `171` in the Backstage config to deploy Terraform Backstage templates to Backstage:
+You can optionally install the catalog by adding it to the Backstage config. 
+
+In case of the idpBuilder, clone the [cnoe-io/stacks](https://github.com/cnoe-io/stacks) repository, navigate to `./ref-implementation/backstage/manifests/install.yaml`, and add the following lines for catalog location at line `171` in the Backstage config to deploy Terraform Backstage templates to Backstage:
 
 ```yaml
       - type: url
@@ -91,10 +101,7 @@ In the idpbuilder folder, navigate to `./examples/ref-implementation/backstage/m
           - allow: [User, Group]
 
 ```
-
-8. **Build and run the Terraform Backstage integrations: **
-
-Run the following idpbuilder command:
+Then run the following idpbuilder command to update the components.
 
 ```bash
 idpbuilder create \
@@ -103,15 +110,17 @@ idpbuilder create \
   -p https://github.com/cnoe-io/stacks//terraform-integrations
 ```
 
-9. **Get secrets: **
+Alternatively, you can take the target link above and directly register it as a component with Backstage, and all the respective components in the catalog will appear in the Backstage catalog.
+
+### **Get secrets:**
 
 Run this command to obtain all the credentials needed to log in to Backstage, Argo, etc.
 
 ```bash
-./idpbuilder get secrets
+idpbuilder get secrets
 ```
 
-10. **Verify the WebUI components:**
+### **Verify the WebUI components:**
 
 Use the credentials from the above secrets output.
 
@@ -122,7 +131,7 @@ Login to Gitea: https://cnoe.localtest.me:8443/gitea
 
 ## 🌟 Component delete workflow
 
-Please follow the following steps if you are looking to delete a component created using the backstage terraform integrations :
+Please follow the following steps if you are looking to delete a component created using the backstage terraform integrations. The `Terraform` resources in this repo are configured to clean up the corresponding cloud resources. When the Argo CD application is deleted, the deletion hook for cloud resources kicks in (takes a little bit of time though).
 
 1. In your [argocd](https://cnoe.localtest.me:8443/argocd) console, naviagate to your application created for your component and delete it manually.
 

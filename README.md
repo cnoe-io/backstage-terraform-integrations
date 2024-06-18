@@ -99,8 +99,8 @@ Run the following idpbuilder command:
 ```bash
 idpbuilder create \
   --use-path-routing \
-  --package-dir examples/terraform-integrations
-
+  -p https://github.com/cnoe-io/stacks//reference-implementation \
+  -p https://github.com/cnoe-io/stacks//terraform-integrations
 ```
 
 9. **Get secrets: **

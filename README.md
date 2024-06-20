@@ -57,7 +57,7 @@ idpbuilder create \
 ```
 
 <details>
-<summary> <b>Optional:</b> Deploy a Data on EKS Terraform stack</summary>
+<summary> <b>Optional:</b> Add AWS Credentials</summary>
 
 In case of deploying AWS resources, you will need access to your AWS account. You can follow the instructions below, to setup your AWS account with CNOE terraform integrations:
 

@@ -10,3 +10,4 @@ spec:
     - ./eks-observability-accelerator/template-infra-monitoring.yaml
     - ./s3-bucket/template-s3-bucket.yaml
     - ./eks-nvdia-gpu-efa/template-cost-monitoring.yaml
+    - ./eks-stateful-workload/template-stateful-workload.yaml

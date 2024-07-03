@@ -7,6 +7,8 @@ metadata:
     backstage.io/kubernetes-namespace: ${{values.namespace}}
     argo-workflows.cnoe.io/label-selector: env=dev,entity-id=${{values.name}}
     argo-workflows.cnoe.io/cluster-name: local
+    terraform.cnoe.io/secret-name: tfstate-default-aws-s3-bucket-${{values.name}}
+    terraform.cnoe.io/secret-namespace: flux-system
 spec:
   type: s3-bucket
   lifecycle: experimental

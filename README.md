@@ -52,7 +52,7 @@ Use the following command to deploy idpbuilder and ensure that the Backstage Ter
 ```bash
 idpbuilder create \
   --use-path-routing \
-  -p https://github.com/cnoe-io/stacks//reference-implementation \
+  -p https://github.com/cnoe-io/stacks//ref-implementation \
   -p https://github.com/cnoe-io/stacks//terraform-integrations
 ```
 
@@ -88,7 +88,7 @@ kubectl apply -f ./aws-secrets-tofu.yaml
 ```
 </details>
 
-### **Update the Backstage catelog:**
+### **Update the Backstage catalog:**
 
 You can optionally install the catalog by adding it to the Backstage config. 
 
@@ -109,7 +109,7 @@ Then run the following idpbuilder command to update the components with `path-to
 ```bash
 idpbuilder create \
   --use-path-routing \
-  -p [path-to-stacks-repo]/reference-implementation \
+  -p [path-to-stacks-repo]/ref-implementation \
   -p https://github.com/cnoe-io/stacks//terraform-integrations
 ```
 
@@ -136,7 +136,7 @@ Use the credentials from the above secrets output.
 
 Please follow the following steps if you are looking to delete a component created using the backstage terraform integrations. The `Terraform` resources in this repo are configured to clean up the corresponding cloud resources. When the Argo CD application is deleted, the deletion hook for cloud resources kicks in (takes a little bit of time though).
 
-1. In your [argocd](https://cnoe.localtest.me:8443/argocd) console, naviagate to your application created for your component and delete it manually.
+1. In your [argocd](https://cnoe.localtest.me:8443/argocd) console, navigate to your application created for your component and delete it manually.
 1. In your [gitea](https://cnoe.localtest.me:8443/gitea/) console, the created repository for your component and delete it manually under settings.
 1. Finally in your backstage console, navigate to component and click on `unregister component` to remove the deleted component from backstage.
 

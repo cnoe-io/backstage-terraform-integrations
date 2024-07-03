@@ -5,8 +5,8 @@ metadata:
   description: NVDIA GPU EFA for ${{ values.name }}
   annotations:
     backstage.io/kubernetes-namespace: ${{values.namespace}}
-    argo-workflows.cnoe.io/label-selector: env=dev,entity-id=${{values.name}}
-    argo-workflows.cnoe.io/cluster-name: local
+    terraform.cnoe.io/secret-name: tfstate-default-eks-cluster-gpu-${{values.name}}
+    terraform.cnoe.io/secret-namespace: ${{values.namespace}}
 spec:
   type: kubernetes-cluster
   lifecycle: experimental

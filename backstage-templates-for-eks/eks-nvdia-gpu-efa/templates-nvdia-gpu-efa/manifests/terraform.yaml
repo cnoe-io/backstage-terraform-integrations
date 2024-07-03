@@ -1,7 +1,7 @@
 apiVersion: infra.contrib.fluxcd.io/v1alpha2
 kind: Terraform
 metadata:
-  name: "eks-cluster-${{values.name}}-terraform"
+  name: "eks-cluster-gpu-${{values.name}}"
   namespace: flux-system
   annotations:
     argocd.argoproj.io/sync-wave: "2"

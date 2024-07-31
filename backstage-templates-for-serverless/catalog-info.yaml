@@ -1,0 +1,8 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: backstage-templates-for-serverless
+  description: A public collection of Backstage serverless templates
+spec:
+  targets:
+    - ./serverless-microservice/template-serverless-microservice.yaml

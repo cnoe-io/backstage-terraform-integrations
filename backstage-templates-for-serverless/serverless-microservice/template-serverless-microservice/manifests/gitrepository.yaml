@@ -1,0 +1,13 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: "serverless-microservice-${{values.name}}-git-repository"
+  namespace: flux-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  interval: 30s
+  # necessary until we generate our own cert
+  url: "http://my-gitea-http.gitea.svc.cluster.local:3000/giteaAdmin/${{values.name}}.git"
+  ref:
+    branch: main

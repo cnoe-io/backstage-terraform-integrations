@@ -9,5 +9,5 @@ spec:
     - ./spark-on-eks/template-data-on-eks.yaml
     - ./eks-observability-accelerator/template-infra-monitoring.yaml
     - ./s3-bucket/template-s3-bucket.yaml
-    - ./eks-nvdia-gpu-efa/template-cost-monitoring.yaml
+    - ./eks-nvdia-gpu-efa/template-nvidia-gpu-efa.yaml
     - ./serverless-microservice/template-serverless-microservice.yaml

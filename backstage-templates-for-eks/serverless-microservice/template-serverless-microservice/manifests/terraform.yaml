@@ -6,7 +6,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:
-  path: ./terraform/
+  path: ./serverless-microservice
   approvePlan: auto
   retryInterval: 10s
   interval: 2m

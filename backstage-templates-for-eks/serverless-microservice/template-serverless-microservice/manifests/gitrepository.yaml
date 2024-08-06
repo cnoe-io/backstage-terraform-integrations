@@ -7,7 +7,6 @@ metadata:
     argocd.argoproj.io/sync-wave: "1"
 spec:
   interval: 30s
-  # necessary until we generate our own cert
-  url: "http://my-gitea-http.gitea.svc.cluster.local:3000/giteaAdmin/${{values.name}}.git"
+  url: https://github.com/aws-samples/appmod-partners-serverless.git
   ref:
     branch: main

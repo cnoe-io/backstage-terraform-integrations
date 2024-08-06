@@ -1,4 +1,4 @@
-.idea
+../../backstage-templates-for-serverless/.idea
 
 # Local .terraform directories
 **/.terraform/*

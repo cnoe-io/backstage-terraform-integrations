@@ -6,6 +6,34 @@ This pattern demonstrates a [Serverless Microservice](https://github.com/aws-sam
 
 You need to [add AWS credentials](https://github.com/tgpadua/backstage-terraform-integrations/tree/main?tab=readme-ov-file#deploy-idpbuilder-with-terraform-integration-templates) before deployed this pattern. 
 
+## Deployment
+
+Navigate to [Backstage](https://cnoe.localtest.me:8443/), click on `Create` in the left pane to view the list of available platform templates, and click `Choose` on the **Serverless Microservice** pattern.
+
+Next, populate the Terraform variables for the pattern deployment as shown below and click on `Review`.
+
+![Backstage](../../images/serverless-microservice-pattern/backstage1.png)
+
+Next, validate the entered variables in the below confirmation screen and click Create :
+
+![Backstage](../../images/serverless-microservice-pattern/backstage2.png)
+
+Next, check on the steps of backstage template run as show below and click `Open In Catalog`:
+
+![Backstage](../../images/serverless-microservice-pattern/backstage3.png)
+
+Next, check on the below screen showing the created Backstage component and click `View Source` to navigate to the Gitea repository:
+
+![Backstage](../../images/serverless-microservice-pattern/backstage4.png)
+
+Next, check on the Gitea repo of the created component as shown below:
+
+![Backstage](../../images/serverless-microservice-pattern/gitea1.png)
+
+Next, Navigate to [ArgoCD](https://cnoe.localtest.me:8443/argocd) console and navigate to Argo App by name `todo` view the below screen:
+
+![Backstage](../../images/serverless-microservice-pattern/argocd1.png)
+
 ## Validation
 
 Next, lets validate the execution of the pattern by tofu controller. Run the below command on your terminal to check on `terraforms.infra.contrib.fluxcd.io ` resource:

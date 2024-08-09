@@ -59,7 +59,7 @@ Next, check on the Gitea repo of the created component as shown below:
 
 ![Gitea Console](../../images/s3_pattern/s3_06.jpg)
 
-Next, Navigate to [ArgoCD](https://cnoe.localtest.me:8443/argocd) console and navigate to Argo App by name `s3-bucket-backstage-terraform-s3-intg`to view the below screen:
+Next, Navigate to [ArgoCD](https://cnoe.localtest.me:8443/argocd) console and navigate to Argo App by name `backstage-terraform-s3-intg`to view the below screen:
 
 ![ArgoCD Console](../../images/s3_pattern/s3_07.jpg)
 
